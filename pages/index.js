@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import redirectUnauthorizedToLogin from "../components/helpers/redirectUnauthorizedToLogin";
 import {FlexBlock} from "../components/styled";
 import TextField from "@material-ui/core/TextField";
@@ -8,6 +8,7 @@ import request from "../components/helpers/request";
 import getConfig from "next/config";
 import styled from 'styled-components'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Layout from "../components/Layout";
 
 const {publicRuntimeConfig} = getConfig();
 
@@ -20,15 +21,19 @@ const EnhancedIcon = styled(FavoriteBorderIcon)`
     cursor:pointer;
 `
 
-
 export default function Home() {
     const [searchString, setSearchString] = useState('')
     const [items, setItems] = useState([])
+    const [loading, setLoading] = useState(false)
     const onSearch = () => {
         if (searchString) {
+            setLoading(true)
             request({
                 url: `${publicRuntimeConfig.CLIENT_API_URL}/images?search=${searchString}`,
-            }).then(setItems)
+            }).then(items => {
+                setItems(items)
+                setLoading(false)
+            })
         }
     }
     const onLike = (id, isLiked) => {
@@ -38,15 +43,16 @@ export default function Home() {
             body: {
                 id
             }
-        }).then(onSearch)
+        }).then(() => {
+            const newItems = [...items]
+            const clickedItem = newItems.find(({id: imageId}) => id === imageId)
+            clickedItem.isLiked = !clickedItem.isLiked
+            setItems(newItems)
+        })
     }
 
     return (
-        <FlexBlock justifyCenter>
-            <Head>
-                <title>Imagify</title>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
+        <Layout>
             <FlexBlock alignCenter m={[30]} wAbs={500}>
                 <FlexBlock grow>
                     <TextField
@@ -65,21 +71,23 @@ export default function Home() {
                 </FlexBlock>
             </FlexBlock>
             <FlexBlock alignCenter>
-                {items.map(({url, id, isLiked}, index) => {
-                    return (
-                        <FlexBlock key={index} column m={20}>
-                            <GalleryImg src={url}/>
-                            <FlexBlock justifyCenter>
-                                <EnhancedIcon
-                                    color={isLiked ? 'secondary' : ''}
-                                    onClick={() => onLike(id, isLiked)}
-                                />
+                {loading ?
+                    <CircularProgress/> : items.map(({url, id, isLiked}, index) => {
+                        return (
+                            <FlexBlock key={index} column m={20}>
+                                <GalleryImg src={url}/>
+                                <FlexBlock justifyCenter>
+                                    <EnhancedIcon
+                                        color={isLiked ? 'secondary' : 'primary'}
+                                        onClick={() => onLike(id, isLiked)}
+                                    />
+                                </FlexBlock>
                             </FlexBlock>
-                        </FlexBlock>
-                    )
-                })}
+                        )
+                    })
+                }
             </FlexBlock>
-        </FlexBlock>
+        </Layout>
     )
 }
 
