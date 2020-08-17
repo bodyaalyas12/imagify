@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import toastr from "toastr";
 
 const useForm = (callback, validation, initialForm) => {
 	const [form, setForm] = useState(initialForm)
@@ -20,7 +19,6 @@ const useForm = (callback, validation, initialForm) => {
 		setErrors(errorObj)
 		if (!Object.values(errorObj).find(element => element)) {
 			callback(form).then(() => setForm(initialForm))
-					.catch(err => toastr.error(err.message))
 		}
 	}
 

@@ -1,4 +1,5 @@
 import Router from 'next/router';
+import toastr from "toastr";
 
 function request({url, body, ...options}) {
 	return fetch(url, {
@@ -19,11 +20,12 @@ function request({url, body, ...options}) {
 				return response
 			})
 			.catch(err => {
+				toastr.error(err.message)
 				if (err.statusCode === 401) {
 					Router.push('/login');
+					return
 				}
-
-				throw err;
+				throw err
 			})
 }
 

@@ -7,7 +7,6 @@ import getConfig from 'next/config';
 import request from "../components/helpers/request";
 import Router from "next/router";
 import Link from "next/link";
-import toastr from 'toastr'
 
 const {publicRuntimeConfig} = getConfig();
 const defaultForm = {
