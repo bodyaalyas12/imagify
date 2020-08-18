@@ -16,7 +16,7 @@ const defaultForm = {
 
 const Login = () => {
     const add = data => {
-        request({
+        return request({
             url: `${publicRuntimeConfig.CLIENT_API_URL}/users/signup`,
             method: "POST",
             body: data
