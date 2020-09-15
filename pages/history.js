@@ -1,8 +1,8 @@
-import Layout from "../components/Layout";
+import Layout from "../src/components/Layout";
 import {useEffect, useState} from "react";
-import request from "../components/helpers/request";
+import request from "../src/components/helpers/request";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {FlexBlock} from "../components/styled";
+import {FlexBlock} from "../src/components/styled";
 import styled from "styled-components";
 
 

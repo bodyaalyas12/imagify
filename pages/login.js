@@ -1,10 +1,10 @@
 import TextField from "@material-ui/core/TextField";
-import useForm from "../components/helpers/useForm";
-import {FlexBlock, StyledLink} from "../components/styled";
-import validation from "../components/Login/validation";
+import useForm from "../src/components/helpers/useForm";
+import {FlexBlock, StyledLink} from "../src/components/styled";
+import validation from "../src/components/Login/validation";
 import Button from "@material-ui/core/Button";
 import getConfig from 'next/config';
-import request from "../components/helpers/request";
+import request from "../src/components/helpers/request";
 import Router from "next/router";
 import Link from "next/link";
 

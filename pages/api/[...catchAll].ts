@@ -1,4 +1,4 @@
-import {getListener} from "../../server/main";
+import {getListener} from "../../src/server/main";
 import {NextApiRequest, NextApiResponse} from "next";
 
 export default (req: NextApiRequest, res: NextApiResponse) => new Promise(async resolve => {

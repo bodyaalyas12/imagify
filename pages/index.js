@@ -1,13 +1,13 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import redirectUnauthorizedToLogin from "../components/helpers/redirectUnauthorizedToLogin";
-import {FlexBlock} from "../components/styled";
+import redirectUnauthorizedToLogin from "../src/components/helpers/redirectUnauthorizedToLogin";
+import {FlexBlock} from "../src/components/styled";
 import TextField from "@material-ui/core/TextField";
 import {useState} from "react";
 import Button from "@material-ui/core/Button";
-import request from "../components/helpers/request";
+import request from "../src/components/helpers/request";
 import styled from 'styled-components'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import Layout from "../components/Layout";
+import Layout from "../src/components/Layout";
 
 
 const GalleryImg = styled.img`
@@ -90,7 +90,6 @@ export default function Home() {
         </Layout>
     )
 }
-
 
 export async function getServerSideProps(context) {
     redirectUnauthorizedToLogin(context);
