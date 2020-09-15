@@ -17,7 +17,7 @@ export class ImageService {
 	constructor(private readonly likesService: LikesService,) {
 	}
 
-	async getPublicImages(search: string, userId: number): Promise<{ url: string, id: string, isLiked: boolean }[]> {
+	async getPublicImages(search: string, userId: number): Promise<{ url: string, id: number, isLiked: boolean }[]> {
 		const flickr = new Flickr(process.env.FLICKR_KEY);
 		const likes = await this.likesService.getLikes(userId);
 		return flickr.photos.search({text: search})

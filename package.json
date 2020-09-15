@@ -32,9 +32,11 @@
     "sass": "^1.26.10",
     "sqlite3": "^5.0.0",
     "styled-components": "^5.1.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "@prisma/client": "2.7.0"
   },
   "devDependencies": {
+    "@prisma/cli": "2.7.0",
     "@babel/plugin-proposal-decorators": "^7.10.5",
     "@babel/plugin-transform-typescript": "^7.11.0",
     "@nestjs/cli": "^7.0.0",

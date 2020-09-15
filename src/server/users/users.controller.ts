@@ -21,7 +21,7 @@ export class UsersController {
 		@Body('email') email: string,
 		@Body('password') password: string
 	): Promise<void> {
-		const id: number = await this.usersService.checkAuth({email, password})
+		const id: number = <number>await this.usersService.checkAuth({email, password})
 		const token = await asyncSignToken(id);
 		res.cookie('token', token,);
 		res.json({message: 'successfully logged in'});

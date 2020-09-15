@@ -1,38 +1,25 @@
 import {Injectable} from '@nestjs/common';
-import {getDatabase} from '../common/database';
+import {PrismaClient} from "@prisma/client";
 
 type History = {
-	string: string,
+	search: string,
 	userId: number
 }
 
 @Injectable()
 export class HistoryService {
-	addHistoryItem({string, userId}: History): Promise<number> {
-		return new Promise((resolve, reject) => {
-			const database = getDatabase();
-			database.run(`INSERT INTO history(string,userId) VALUES(?,?)`, [string, userId], function (err: any) {
-				if (err) {
-					reject(err);
-				}
-				// @ts-ignore
-				resolve(this.lastID);
-			});
-		});
+	async addHistoryItem({search, userId}: History): Promise<History> {
+		const prisma = new PrismaClient()
+		return await prisma.history.create({
+			data: {search, userId}
+		})
 	}
 
-	getHistory(userId: number): Promise<Array<string>> {
-		return new Promise((resolve, reject) => {
-			const database = getDatabase();
-			database.all(
-				`SELECT string FROM  history where userId = ?`,
-				[userId],
-				function (err: any, rows: { string: string; }[]) {
-					if (err) {
-						reject(err);
-					}
-					resolve(rows.map(({string}) => string));
-				});
-		});
+	async getHistory(userId: number): Promise<Array<string>> {
+		const prisma = new PrismaClient()
+		const result = await prisma.history.findMany({
+			where: {userId}
+		})
+		return result.map(({search}: History) => search)
 	}
 }

@@ -1,45 +1,29 @@
 import {Injectable} from '@nestjs/common';
-import {getDatabase} from '../common/database';
+import {PrismaClient} from "@prisma/client";
 
 type Like = { imageId: string, userId: number }
 
 @Injectable()
-export class LikesService {
-	createLike({imageId, userId}: Like): Promise<number> {
-		return new Promise((resolve, reject) => {
-			const database = getDatabase();
-			database.run(`INSERT INTO likes(imageId,userId) VALUES(?,?)`, [imageId, userId], function (err: any) {
-				if (err) {
-					reject(err);
-				}
-				// @ts-ignore
-				resolve(this.lastID);
-			});
-		});
+export class LikesService {//TODO try to inject PrismaClient
+	async createLike({imageId, userId}: Like): Promise<Like> {
+		const prisma = new PrismaClient()
+		return await prisma.likes.create({
+			data: {imageId, userId}
+		})
 	}
 
-	getLikes(userId: number): Promise<Array<number>> {
-		return new Promise((resolve, reject) => {
-			const database = getDatabase();
-			database.all(`SELECT imageId FROM likes where userId = ?`, [userId], function (err: any, rows: { imageId: number }[]) {
-				if (err) {
-					reject(err);
-				}
-				resolve(rows.map(({imageId}) => imageId));
-			});
-		});
+	async getLikes(userId: number): Promise<Array<string>> {
+		const prisma = new PrismaClient()
+		const result = await prisma.likes.findMany({
+			where: {userId}
+		})
+		return result.map(({imageId}: Like) => imageId)
 	}
 
 	deleteLike({userId, imageId}: Like) {
-		return new Promise((resolve, reject) => {
-			const database = getDatabase();
-			database.run(`DELETE FROM likes where userId = ? and imageId = ?`, [userId, imageId], function (err: any) {
-				if (err) {
-					reject(err);
-				}
-				// @ts-ignore
-				resolve(this.changes);
-			});
-		});
+		const prisma = new PrismaClient()
+		return prisma.likes.deleteMany({
+			where: {userId, imageId}
+		})
 	}
 }
