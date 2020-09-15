@@ -3,11 +3,9 @@ import useForm from "../components/helpers/useForm";
 import {FlexBlock, StyledLink, Title} from "../components/styled";
 import validation from "../components/Signup/validation";
 import Button from "@material-ui/core/Button";
-import getConfig from 'next/config';
 import request from "../components/helpers/request";
 import Link from 'next/link'
 
-const {publicRuntimeConfig} = getConfig();
 const defaultForm = {
     email: '',
     password: '',
@@ -17,7 +15,7 @@ const defaultForm = {
 const Login = () => {
     const add = data => {
         return request({
-            url: `${publicRuntimeConfig.CLIENT_API_URL}/users/signup`,
+            url: `/api/users/signup`,
             method: "POST",
             body: data
         })

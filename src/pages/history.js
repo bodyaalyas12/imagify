@@ -1,12 +1,10 @@
 import Layout from "../components/Layout";
 import {useEffect, useState} from "react";
 import request from "../components/helpers/request";
-import getConfig from "next/config";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {FlexBlock} from "../components/styled";
 import styled from "styled-components";
 
-const {publicRuntimeConfig} = getConfig();
 
 const HistoryItem = styled.div`
     padding:5px 10px;
@@ -21,7 +19,7 @@ const History = () => {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         request({
-            url: `${publicRuntimeConfig.CLIENT_API_URL}/history`,
+            url: `/api/history`,
         }).then((res) => {
             setItems(res)
             setLoading(false)

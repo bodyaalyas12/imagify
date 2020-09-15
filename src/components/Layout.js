@@ -3,16 +3,13 @@ import Link from "next/link";
 import Button from "@material-ui/core/Button";
 import Head from "next/head";
 import request from "./helpers/request";
-import getConfig from "next/config";
 import Router from "next/router";
-
-const {publicRuntimeConfig} = getConfig();
 
 
 const Layout = ({children}) => {
     const onLogout = () => {
         request({
-            url: `${publicRuntimeConfig.CLIENT_API_URL}/users/logout`,
+            url: `/api/users/logout`,
         }).then(() => {
             Router.push('/login')
         })
