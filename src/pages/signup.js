@@ -1,9 +1,9 @@
 import TextField from "@material-ui/core/TextField";
-import useForm from "../src/components/helpers/useForm";
-import {FlexBlock, StyledLink, Title} from "../src/components/styled";
-import validation from "../src/components/Signup/validation";
+import useForm from "../components/helpers/useForm";
+import {FlexBlock, StyledLink, Title} from "../components/styled";
+import validation from "../components/Signup/validation";
 import Button from "@material-ui/core/Button";
-import request from "../src/components/helpers/request";
+import request from "../components/helpers/request";
 import Link from 'next/link'
 
 const defaultForm = {

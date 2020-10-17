@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
-import '../styles/globals.css'
-import GlobalStyles from "../src/components/styled/globalStyles";
+import '../../styles/globals.css'
+import GlobalStyles from "../components/styled/globalStyles";
 import 'toastr/toastr.scss'
 import Head from "next/head";
 
