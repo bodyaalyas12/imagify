@@ -1,6 +1,10 @@
 import Router from 'next/router';
 
-function request({url, body, ...options}) {
+function request({
+									 url,
+									 body,
+									 ...options
+								 }: Omit<RequestInit, "body"> & { url: RequestInfo; body?: Record<string, any> }) {
 	return fetch(url, {
 		body: JSON.stringify(body),
 		headers: {
@@ -12,7 +16,7 @@ function request({url, body, ...options}) {
 			.then(res => res.json())
 			.then(response => {
 				if (response.statusCode > 400) {
-					const error = new Error(response.message)
+					const error: Error & { statusCode?: string } = new Error(response.message)
 					error.statusCode = response.statusCode
 					throw error
 				}

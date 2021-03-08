@@ -1,10 +1,10 @@
-import Document from 'next/document'
+import Document, { DocumentContext } from 'next/document'
 import {ServerStyleSheet} from 'styled-components'
-import { ServerStyleSheets as MaterialStyleSheets } from '@material-ui/core/styles';
+import {ServerStyleSheets as MaterialStyleSheets} from '@material-ui/core/styles';
 
 
 export default class MyDocument extends Document {
-    static async getInitialProps(ctx) {
+    static async getInitialProps(ctx: DocumentContext) {
         const sheet = new ServerStyleSheet()
         const materialSheet = new MaterialStyleSheets()
         const originalRenderPage = ctx.renderPage
