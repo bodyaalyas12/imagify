@@ -1,6 +1,15 @@
-import React, {ChangeEvent, useState} from 'react'
+import {ChangeEvent, useState} from 'react'
 
-const useForm = (callback: (value: Record<string, any>) => Promise<any>, validation: Record<string, Function>, initialForm: Record<string, any>) => {
+export type FormErrors = Record<string, any>
+export type FormValues = Record<string, any>
+export type OnChangeHandler = (val: ChangeEvent<HTMLInputElement>) => void
+export type OnSubmit = () => void
+
+const useForm = (
+		callback: (value: FormValues) => Promise<any>,
+		validation: Record<string, Function>,
+		initialForm: FormValues
+): [FormValues, FormErrors, OnChangeHandler, OnSubmit] => {
 	const [form, setForm] = useState(initialForm)
 	const [errors, setErrors] = useState(initialForm)
 
