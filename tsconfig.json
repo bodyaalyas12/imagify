@@ -35,14 +35,22 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
     "./**/*.tsx",
-    "./**/*.ts"
+    "./**/*.ts",
+    ".next/types/**/*.ts"
   ]
 }

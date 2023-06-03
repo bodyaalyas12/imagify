@@ -1,25 +1,26 @@
+"use client";
 import TextField from "@mui/material/TextField";
-import useForm from "../components/helpers/useForm";
+import useForm from "@/components/helpers/useForm";
 import { FlexBlock, StyledLink } from "@/components/styled";
-import validation from "../components/Login/validation";
+import validation from "@/components/Login/validation";
 import Button from "@mui/material/Button";
-import request from "../components/helpers/request";
-import Router from "next/router";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { loginAction } from "@/app/actions/login";
 
 const defaultForm = {
   email: "",
   password: "",
 };
 
-const Login = () => {
-  const add = useCallback((data: Record<string, any>) => {
-    return request({
-      url: `/api/users/login`,
-      method: "POST",
-      body: data,
-    }).then(() => Router.push("/"));
+const LoginComponent = () => {
+  const router = useRouter();
+  let [isPending, startTransition] = useTransition();
+  console.log(isPending);
+
+  const add = useCallback(async (data: Record<string, any>) => {
+    await startTransition(() => loginAction(data));
   }, []);
 
   const [form, errors, handleChange, handleSubmit] = useForm(add, validation, defaultForm);
@@ -62,4 +63,4 @@ const Login = () => {
     </FlexBlock>
   );
 };
-export default Login;
+export default LoginComponent;

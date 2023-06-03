@@ -8,21 +8,21 @@ datasource db {
 }
 
 model users {
-  id       Int    @default(autoincrement()) @id
-  email    String @unique
+  id       Int    @id @unique(map: "sqlite_autoindex_users_1") @default(autoincrement())
+  email    String @unique(map: "sqlite_autoindex_users_2")
   password String
 }
 
-/// 
+///
 model likes {
-  id      Int    @default(autoincrement()) @id
+  id      Int    @id @default(autoincrement())
   imageId String
   userId  Int
 }
 
-/// 
+///
 model history {
-  id     Int    @default(autoincrement()) @id
+  id     Int    @id @default(autoincrement())
   search String
   userId Int
 }

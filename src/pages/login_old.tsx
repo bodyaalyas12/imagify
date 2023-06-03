@@ -1,31 +1,31 @@
 import TextField from "@mui/material/TextField";
 import useForm from "../components/helpers/useForm";
-import { FlexBlock, StyledLink, Title } from "@/components/styled";
-import validation from "../components/Signup/validation";
+import { FlexBlock, StyledLink } from "@/components/styled";
+import validation from "../components/Login/validation";
 import Button from "@mui/material/Button";
 import request from "../components/helpers/request";
+import Router from "next/router";
 import Link from "next/link";
+import { useCallback } from "react";
 
 const defaultForm = {
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
-const add = (data: Record<string, any>) => {
-  return request({
-    url: `/api/users/signup`,
-    method: "POST",
-    body: data,
-  });
-};
+const Login_old = () => {
+  const add = useCallback((data: Record<string, any>) => {
+    return request({
+      url: `/api/users/login`,
+      method: "POST",
+      body: data,
+    }).then(() => Router.push("/"));
+  }, []);
 
-const Login = () => {
   const [form, errors, handleChange, handleSubmit] = useForm(add, validation, defaultForm);
   return (
     <FlexBlock justifyCenter p={50}>
       <FlexBlock column wAbs={500}>
-        <Title>Sign up</Title>
         <FlexBlock m={[0, 0, 20, 0]} width={100}>
           <TextField
             label="Email"
@@ -51,28 +51,15 @@ const Login = () => {
             variant="outlined"
           />
         </FlexBlock>
-        <FlexBlock m={[0, 0, 20, 0]} width={100}>
-          <TextField
-            label="Confirm password"
-            error={Boolean(errors.confirmPassword)}
-            onChange={handleChange}
-            helperText={errors.confirmPassword}
-            type={"password"}
-            name={"confirmPassword"}
-            value={form.confirmPassword}
-            fullWidth={true}
-            variant="outlined"
-          />
-        </FlexBlock>
         <Button variant={"contained"} color="primary" onClick={handleSubmit}>
-          Sign up
+          Submit
         </Button>
         <StyledLink justifyCenter m={[20, 0]}>
-          <span>Already have an account?</span>
-          <Link href="/login_old">Sign In</Link>
+          <span>Do not have an account?</span>
+          <Link href="/signup">Sign Up</Link>
         </StyledLink>
       </FlexBlock>
     </FlexBlock>
   );
 };
-export default Login;
+export default Login_old;
