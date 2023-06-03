@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 	html * {
@@ -44,4 +44,4 @@ export default createGlobalStyle`
 	input{
 		outline-color:transparent;
 	}
-`
+`;
