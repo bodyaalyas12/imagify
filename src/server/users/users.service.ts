@@ -19,7 +19,7 @@ export class UsersService {
 
   async checkAuth({ email, password }: User): Promise<User["id"]> {
     const prisma = new PrismaClient();
-    const user: User | null = await prisma.users.findOne({
+    const user: User | null = await prisma.users.findUnique({
       where: {
         email,
       },
