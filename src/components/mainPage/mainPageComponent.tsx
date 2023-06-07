@@ -1,22 +1,12 @@
 "use client";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import { FlexBlock } from "@/components/styled";
 import TextField from "@mui/material/TextField";
 import { useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import request from "@/components/helpers/request";
-import styled from "styled-components";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-const GalleryImg = styled.img`
-  width: auto;
-  height: auto;
-`;
-
-const EnhancedIcon = styled(FavoriteBorderIcon)`
-  cursor: pointer;
-`;
+import { Grid } from "@mui/material";
 
 export type PhotoItem = {
   url: string;
@@ -60,8 +50,8 @@ export default function MainPageComponent() {
 
   return (
     <>
-      <FlexBlock alignCenter m={[30]} wAbs={500}>
-        <FlexBlock grow>
+      <Grid container spacing={3} alignItems={"center"} m={4} width={500}>
+        <Grid item xs>
           <TextField
             label="Search"
             onChange={({ target }) => setSearchString(target.value)}
@@ -70,29 +60,33 @@ export default function MainPageComponent() {
             fullWidth={true}
             variant="outlined"
           />
-        </FlexBlock>
-        <FlexBlock m={[0, 0, 0, 15]}>
+        </Grid>
+        <Grid item>
           <Button variant={"contained"} color="primary" onClick={onSearch}>
             Find images
           </Button>
-        </FlexBlock>
-      </FlexBlock>
-      <FlexBlock alignCenter>
+        </Grid>
+      </Grid>
+      <Grid container flexWrap={"wrap"} alignItems={"center"}>
         {loading ? (
           <CircularProgress />
         ) : (
           items.map(({ url, id, isLiked }, index) => {
             return (
-              <FlexBlock key={index} column m={20}>
-                <GalleryImg src={url} />
-                <FlexBlock justifyCenter>
-                  <EnhancedIcon color={isLiked ? "secondary" : "primary"} onClick={() => onLike(id, isLiked)} />
-                </FlexBlock>
-              </FlexBlock>
+              <Grid container direction={"column"} key={index} width={"auto"} m={2}>
+                <img width={"auto"} alt={""} src={url} />
+                <Grid container justifyContent={"center"}>
+                  <FavoriteBorderIcon
+                    sx={{ cursor: "pointer" }}
+                    color={isLiked ? "secondary" : "primary"}
+                    onClick={() => onLike(id, isLiked)}
+                  />
+                </Grid>
+              </Grid>
             );
           })
         )}
-      </FlexBlock>
+      </Grid>
     </>
   );
 }

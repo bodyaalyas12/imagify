@@ -2,11 +2,11 @@
 
 import TextField from "@mui/material/TextField";
 import useForm from "@/components/helpers/useForm";
-import { FlexBlock, StyledLink, Title } from "@/components/styled";
 import validation from "@/components/Signup/validation";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { signupAction } from "@/app/signup/signupAction";
+import { Grid, Typography } from "@mui/material";
 
 const defaultForm = {
   email: "",
@@ -19,12 +19,12 @@ const SignupComponent = () => {
     const res = await signupAction(data);
     console.log(res);
   };
-  const [form, errors, handleChange, handleSubmit] = useForm(add, validation, defaultForm);
+  const [form, errors, handleChange, handleSubmit] = useForm(add, validation, defaultForm); // TODO rewrite on FORMIK
   return (
-    <FlexBlock justifyCenter p={50}>
-      <FlexBlock column wAbs={500}>
-        <Title>Sign up</Title>
-        <FlexBlock m={[0, 0, 20, 0]} width={100}>
+    <Grid justifyContent={"center"} container m={8}>
+      <Grid direction={"column"} container width={500}>
+        <Typography>Sign up</Typography>
+        <Grid container mb={2}>
           <TextField
             label="Email"
             error={Boolean(errors.email)}
@@ -35,8 +35,8 @@ const SignupComponent = () => {
             fullWidth={true}
             variant="outlined"
           />
-        </FlexBlock>
-        <FlexBlock m={[0, 0, 20, 0]} width={100}>
+        </Grid>
+        <Grid container mb={2}>
           <TextField
             label="Password"
             error={Boolean(errors.password)}
@@ -48,8 +48,8 @@ const SignupComponent = () => {
             fullWidth={true}
             variant="outlined"
           />
-        </FlexBlock>
-        <FlexBlock m={[0, 0, 20, 0]} width={100}>
+        </Grid>
+        <Grid container mb={2}>
           <TextField
             label="Confirm password"
             error={Boolean(errors.confirmPassword)}
@@ -61,16 +61,18 @@ const SignupComponent = () => {
             fullWidth={true}
             variant="outlined"
           />
-        </FlexBlock>
+        </Grid>
         <Button variant={"contained"} color="primary" onClick={handleSubmit}>
           Sign up
         </Button>
-        <StyledLink justifyCenter m={[20, 0]}>
-          <span>Already have an account?</span>
-          <Link href="/login">Sign In</Link>
-        </StyledLink>
-      </FlexBlock>
-    </FlexBlock>
+        <Grid container justifyContent={"center"} mt={2}>
+          <Typography>Already have an account?</Typography>
+          <Link href="/login">
+            <Typography>Sign In</Typography>
+          </Link>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 export default SignupComponent;

@@ -1,25 +1,26 @@
 import Link from "next/link";
 import Head from "next/head";
 import React from "react";
+import { Grid, Stack, Button } from "@/components/material/client";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
       <Head>
         <title>Imagify</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={"flex"}>
+      <Stack>
         <Link href={"/"}>
-          <button>Main page</button>
+          <Button>Main page</Button>
         </Link>
         <Link href={"/history"}>
-          <button>History</button>
+          <Button>History</Button>
         </Link>
-        <button>Logout</button>
-      </div>
+        <Button>Logout</Button>
+      </Stack>
       {children}
-    </div>
+    </Grid>
   );
 };
 export default Layout;
