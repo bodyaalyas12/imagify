@@ -1,11 +1,10 @@
-import cookies from "next-cookies";
-import { NextPageContext } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-function redirectUnauthorizedToLogin(context: NextPageContext) {
-  const { token } = cookies(context);
-  if (!token) {
-    context.res?.writeHead(302, { Location: "/login" });
-    context.res?.end();
+function redirectUnauthorizedToLogin() {
+  const cookieStore = cookies();
+  if (!cookieStore.has("token")) {
+    redirect("/login");
   }
 }
 

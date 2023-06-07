@@ -2,16 +2,17 @@
 
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
+import { asyncSignToken } from "@/server/common/asyncJWT";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function loginAction({ email, password }: any) {
   const prisma = new PrismaClient();
-  console.log(email, password);
   const user = await prisma.users.findUnique({
     where: {
       email,
     },
   });
-  console.log(user);
   if (!user) {
     throw new Error("Auth failed");
   }
@@ -20,4 +21,7 @@ export async function loginAction({ email, password }: any) {
   if (!isValidPassword) {
     throw new Error("Auth failed");
   }
+  const token = await asyncSignToken(user.id);
+  cookies().set({ name: "token", value: token, httpOnly: true });
+  redirect("/");
 }

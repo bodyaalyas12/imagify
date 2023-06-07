@@ -1,31 +1,29 @@
 "use client";
+
 import TextField from "@mui/material/TextField";
 import useForm from "@/components/helpers/useForm";
-import { FlexBlock, StyledLink } from "@/components/styled";
-import validation from "@/components/Login/validation";
+import { FlexBlock, StyledLink, Title } from "@/components/styled";
+import validation from "@/components/Signup/validation";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import { useCallback, useTransition } from "react";
-import { loginAction } from "@/app/login/loginAction";
+import { signupAction } from "@/app/signup/signupAction";
 
 const defaultForm = {
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
-const LoginComponent = () => {
-  let [isPending, startTransition] = useTransition();
-  console.log(isPending);
-
-  const add = useCallback(async (data: Record<string, any>) => {
-    startTransition(() => loginAction(data));
-  }, []);
-
+const SignupComponent = () => {
+  const add = async (data: Record<string, any>) => {
+    const res = await signupAction(data);
+    console.log(res);
+  };
   const [form, errors, handleChange, handleSubmit] = useForm(add, validation, defaultForm);
-
   return (
     <FlexBlock justifyCenter p={50}>
       <FlexBlock column wAbs={500}>
+        <Title>Sign up</Title>
         <FlexBlock m={[0, 0, 20, 0]} width={100}>
           <TextField
             label="Email"
@@ -51,15 +49,28 @@ const LoginComponent = () => {
             variant="outlined"
           />
         </FlexBlock>
+        <FlexBlock m={[0, 0, 20, 0]} width={100}>
+          <TextField
+            label="Confirm password"
+            error={Boolean(errors.confirmPassword)}
+            onChange={handleChange}
+            helperText={errors.confirmPassword}
+            type={"password"}
+            name={"confirmPassword"}
+            value={form.confirmPassword}
+            fullWidth={true}
+            variant="outlined"
+          />
+        </FlexBlock>
         <Button variant={"contained"} color="primary" onClick={handleSubmit}>
-          Submit
+          Sign up
         </Button>
         <StyledLink justifyCenter m={[20, 0]}>
-          <span>Do not have an account?</span>
-          <Link href="/signup">Sign Up</Link>
+          <span>Already have an account?</span>
+          <Link href="/login">Sign In</Link>
         </StyledLink>
       </FlexBlock>
     </FlexBlock>
   );
 };
-export default LoginComponent;
+export default SignupComponent;

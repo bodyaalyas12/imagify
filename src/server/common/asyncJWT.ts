@@ -1,10 +1,10 @@
 import * as jwt from "jsonwebtoken";
 import { VerifyCallback } from "jsonwebtoken";
 
-export const asyncSignToken = (id: number) => {
-  return new Promise<string>((resolve, reject) => {
+export const asyncSignToken = (id: number): Promise<string> => {
+  return new Promise((resolve, reject) => {
     jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: process.env.JWT_EXPIRES }, (err, token) => {
-      if (err) {
+      if (err || !token) {
         reject(err);
         return;
       }

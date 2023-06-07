@@ -56,7 +56,7 @@ const Login_old = () => {
         </Button>
         <StyledLink justifyCenter m={[20, 0]}>
           <span>Do not have an account?</span>
-          <Link href="/signup">Sign Up</Link>
+          <Link href="/signup_old">Sign Up</Link>
         </StyledLink>
       </FlexBlock>
     </FlexBlock>

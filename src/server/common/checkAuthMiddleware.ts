@@ -11,7 +11,8 @@ export function checkAuthMiddleware(req: Request, res: Response, next: NextFunct
       req.body.userId = id;
       next();
     })
-    .catch(() => {
+    .catch((error) => {
+      console.log(error);
       res.clearCookie("token");
       res.status(401).json({ error: "Invalid auth token", statusCode: 401 });
     });
