@@ -22,6 +22,7 @@ export async function GET(request: Request) {
   });
   const flickr = new Flickr(process.env.FLICKR_KEY);
   const likes = await prisma.like.findMany({ where: { userId } }); // TODO make a Set
+  console.log(likes);
   const result: FlickrResult = await flickr.photos.search({ text: search });
   const mapped = result.body.photos.photo.map(({ farm, server, id, secret }) => ({
     url: `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg`,

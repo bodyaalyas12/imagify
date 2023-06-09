@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import request from "@/components/helpers/request";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Grid } from "@mui/material";
+import addLikeAction from "@/app/(withNavigation)/addLikeAction";
 
 export type PhotoItem = {
   url: string;
@@ -30,21 +31,15 @@ export default function MainPageComponent() {
       });
     }
   }, [searchString, setItems, setLoading]);
-  const onLike = (id: string, isLiked: boolean) => {
-    request({
-      url: `/api/likes`,
-      method: isLiked ? "DELETE" : "POST",
-      body: {
-        id,
-      },
-    }).then(() => {
-      const newItems = [...items];
-      const clickedItem = newItems.find(({ id: imageId }) => id === imageId);
-      if (clickedItem) {
-        clickedItem.isLiked = !clickedItem.isLiked;
-      }
-      setItems(newItems);
-    });
+  const onLike = async (id: string, isLiked: boolean) => {
+    const res = await addLikeAction({ imageId: id, isLiked });
+    console.log(res);
+    const newItems = [...items];
+    const clickedItem = newItems.find(({ id: imageId }) => id === imageId);
+    if (clickedItem) {
+      clickedItem.isLiked = !clickedItem.isLiked;
+    }
+    setItems(newItems);
   };
 
   return (
@@ -70,7 +65,7 @@ export default function MainPageComponent() {
         {loading ? (
           <CircularProgress />
         ) : (
-          items.map(({ url, id, isLiked }, index) => {
+          items.map(({ url, id, isLiked }: PhotoItem, index) => {
             return (
               <Grid container direction={"column"} key={index} width={"auto"} m={2}>
                 <img width={"auto"} alt={""} src={url} />
