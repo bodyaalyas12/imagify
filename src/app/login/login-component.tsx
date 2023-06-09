@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useCallback, useTransition } from "react";
 import { loginAction } from "@/app/login/loginAction";
 import { Grid, Typography } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 const defaultForm = {
   email: "",
@@ -49,7 +50,7 @@ const LoginComponent = () => {
             variant="outlined"
           />
         </Grid>
-        <LoadingButton loading={isPending} variant={"contained"} color="primary" onClick={handleSubmit}>
+        <LoadingButton loading={isPending} variant={"contained"} color="primary" onClick={() => signIn()}>
           Submit
         </LoadingButton>
         <Grid container justifyContent={"center"} mt={2}>

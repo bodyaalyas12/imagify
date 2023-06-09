@@ -1,5 +1,4 @@
 "use client";
-
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { useCallback, useState } from "react";
@@ -67,7 +66,7 @@ export default function MainPageComponent() {
           </Button>
         </Grid>
       </Grid>
-      <Grid container flexWrap={"wrap"} alignItems={"center"}>
+      <Grid container width={"auto"} flexWrap={"wrap"} alignItems={"center"}>
         {loading ? (
           <CircularProgress />
         ) : (
