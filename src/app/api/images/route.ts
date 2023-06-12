@@ -21,13 +21,13 @@ export async function GET(request: Request) {
     data: { userId, search },
   });
   const flickr = new Flickr(process.env.FLICKR_KEY);
-  const likes = await prisma.like.findMany({ where: { userId } }); // TODO make a Set
-  console.log(likes);
+  const likes = await prisma.like.findMany({ where: { userId } });
+  const likesSet = new Set(likes.map(({ imageId }) => imageId));
   const result: FlickrResult = await flickr.photos.search({ text: search });
   const mapped = result.body.photos.photo.map(({ farm, server, id, secret }) => ({
     url: `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg`,
     id,
-    // isLiked: likes.includes(id),
+    isLiked: likesSet.has(id),
   }));
 
   return NextResponse.json(mapped);

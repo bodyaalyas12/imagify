@@ -28,7 +28,6 @@
     "baseUrl": ".",
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "isolatedModules": true,
@@ -44,15 +43,14 @@
         "name": "next"
       }
     ],
-    "typeRoots": ["src/types/next-auth.d.ts"]
+    "strict": false
   },
-  "exclude": [
-    "node_modules"
-  ],
   "include": [
     "./**/*.tsx",
     "./**/*.ts",
-    ".next/types/**/*.ts",
-    "src/types/next-auth.d.ts"
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

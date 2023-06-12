@@ -1,19 +1,32 @@
 import { getHistoryData } from "@/app/(withNavigation)/history/getHistoryData";
+import { Divider, List, ListItem, ListItemText } from "@/components/material/client";
+
+export const metadata = {
+  title: "History",
+};
 
 export default async function Page() {
   const data = await getHistoryData();
-  console.log(data);
   // Fetch data directly in a Server Component
   // Forward fetched data to your Client Component
   return (
-    <div className={"w-full flex"}>
+    <List
+      sx={{
+        width: "100%",
+        maxWidth: 360,
+        bgcolor: "background.paper",
+      }}
+    >
       {data.length > 0
-        ? data.map((item, index) => (
-            <div key={index} className="p-2 border border-gray-400 m-4 rounded text-blue-800">
-              {item.search}
-            </div>
+        ? data.map((item) => (
+            <>
+              <ListItem>
+                <ListItemText primary={item.search} secondary={item.createdAt.toDateString()} />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </>
           ))
         : "History is empty"}
-    </div>
+    </List>
   );
 }

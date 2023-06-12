@@ -1,18 +1,20 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { Button, Grid, Stack } from "@/components/material/client";
+import { signOut } from "next-auth/react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
-      <Stack>
+    <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"} p={2}>
+      <Stack direction={"row"} spacing={3}>
         <Link href={"/"}>
           <Button>Main page</Button>
         </Link>
         <Link href={"/history"}>
           <Button>History</Button>
         </Link>
-        <Button>Logout</Button>
+        <Button onClick={() => signOut()}>Logout</Button>
       </Stack>
       {children}
     </Grid>
