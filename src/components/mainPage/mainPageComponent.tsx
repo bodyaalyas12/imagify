@@ -1,12 +1,11 @@
 "use client";
-import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { useCallback, useState } from "react";
-import Button from "@mui/material/Button";
 import request from "@/components/helpers/request";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Grid } from "@mui/material";
 import addLikeAction from "@/app/(withNavigation)/addLikeAction";
+import { LoadingButton, Masonry } from "@mui/lab";
 
 export type PhotoItem = {
   url: string;
@@ -43,9 +42,9 @@ export default function MainPageComponent() {
   };
 
   return (
-    <>
-      <Grid container spacing={3} alignItems={"center"} m={4} width={500}>
-        <Grid item xs>
+    <Grid item container direction={"column"} xs mt={2}>
+      <Grid container item spacing={3} p={2} alignItems={"center"} justifyContent={"center"}>
+        <Grid item width={350}>
           <TextField
             label="Search"
             onChange={({ target }) => setSearchString(target.value)}
@@ -56,31 +55,28 @@ export default function MainPageComponent() {
           />
         </Grid>
         <Grid item>
-          <Button variant={"contained"} color="primary" onClick={onSearch}>
+          <LoadingButton loading={loading} variant={"contained"} color="primary" onClick={onSearch}>
             Find images
-          </Button>
+          </LoadingButton>
         </Grid>
       </Grid>
-      <Grid container width={"auto"} flexWrap={"wrap"} alignItems={"center"}>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          items.map(({ url, id, isLiked }: PhotoItem, index) => {
-            return (
-              <Grid container direction={"column"} key={index} width={"auto"} m={2}>
-                <img width={"auto"} alt={""} src={url} />
-                <Grid container justifyContent={"center"}>
-                  <FavoriteBorderIcon
-                    sx={{ cursor: "pointer" }}
-                    color={isLiked ? "secondary" : "primary"}
-                    onClick={() => onLike(id, isLiked)}
-                  />
-                </Grid>
+      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }} spacing={2}>
+        {items.map(({ url, id, isLiked }: PhotoItem, index) => {
+          return (
+            <Grid container direction={"column"} key={index} width={"auto"}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img alt={""} src={url} width={"100%"} />
+              <Grid container justifyContent={"center"}>
+                <FavoriteBorderIcon
+                  sx={{ cursor: "pointer" }}
+                  color={isLiked ? "secondary" : "primary"}
+                  onClick={() => onLike(id, isLiked)}
+                />
               </Grid>
-            );
-          })
-        )}
-      </Grid>
-    </>
+            </Grid>
+          );
+        })}
+      </Masonry>
+    </Grid>
   );
 }

@@ -21,9 +21,9 @@ export default async function Page() {
         ? data.map((item) => (
             <>
               <ListItem>
-                <ListItemText primary={item.search} secondary={item.createdAt.toDateString()} />
+                <ListItemText primary={item.search} secondary={item.createdAt.toUTCString()} />
               </ListItem>
-              <Divider variant="inset" component="li" />
+              <Divider variant="fullWidth" />
             </>
           ))
         : "History is empty"}

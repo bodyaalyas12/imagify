@@ -6,8 +6,8 @@ import { signOut } from "next-auth/react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"} p={2}>
-      <Stack direction={"row"} spacing={3}>
+    <Grid container direction={"column"} p={2}>
+      <Stack direction={"row"} justifyContent={"center"} spacing={3}>
         <Link href={"/"}>
           <Button>Main page</Button>
         </Link>
